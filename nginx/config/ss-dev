@@ -1,0 +1,20 @@
+server {
+    if ($host = ss-dev.noe.systems) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+        listen 80;
+        server_name ss-dev.noe.systems;
+        location / {
+                proxy_pass http://172.17.0.4:8080;
+        }
+}
+server {
+        listen 443 ssl;
+        server_name ss-dev.noe.systems;
+    ssl_certificate /etc/letsencrypt/live/ss-dev.noe.systems/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ss-dev.noe.systems/privkey.pem; # managed by Certbot
+        location / {
+                proxy_pass http://172.17.0.4:8080;
+        }
+
+}
